@@ -1,4 +1,19 @@
-class Passenger{
+import 'dart:convert';
+class Passenger {
+  Passenger({
+    required this.id,
+    required this.name,
+    required this.age,
+    required this.dni,
+    required this.email,
+    required this.password,
+    required this.phoneNumber,
+    required this.pfp,
+    required this.puntuacion,
+    required this.createAt,
+    required this.updateAt
+  });
+
   int id;
   String name;
   int age;
@@ -8,20 +23,36 @@ class Passenger{
   String phoneNumber;
   String pfp;
   int puntuacion;
+  String createAt;
+  String updateAt;
 
-  Passenger(this.id, this.name, this.age, this.dni, this.email, this.password,
-      this.phoneNumber, this.pfp, this.puntuacion);
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'age': age,
-      'dni': dni,
-      'email': email,
-      'password': password,
-      'phoneNumber': phoneNumber,
-      'pfp': pfp,
-      'puntuacion': puntuacion
-    };
-  }
+  factory Passenger.fromJson(String str) => Passenger.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Passenger.fromMap(Map<String, dynamic> json) => Passenger(
+    id: json["id"],
+    name: json["name"],
+    age: json["age"],
+    dni: json["dni"],
+    email: json["email"],
+    password: json["password"],
+    phoneNumber: json["phoneNumber"],
+    pfp: json["pfp"],
+    puntuacion: json["puntuacion"],
+    createAt: json["createAt"],
+    updateAt: json["updateAt"]
+  );
+
+  Map<String, dynamic> toMap() => {
+    "id": id,
+    "name": name,
+    "age": age,
+    "dni": dni,
+    "email": email,
+    "password": password,
+    "phoneNumber": phoneNumber,
+    "pfp": pfp,
+    "puntuacion": puntuacion,
+  };
 }

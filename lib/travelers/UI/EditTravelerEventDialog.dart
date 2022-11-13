@@ -8,24 +8,16 @@ class EditTravelEventDialog{
   final exdeparture_date = TextEditingController();
   final exseating = TextEditingController();
   final exstarting_point= TextEditingController();
-  int userId=1;
-  String url = "https://be-trip-back322.herokuapp.com/api/v1";
-  late TravelEvent event;
-  int asd=0;
-  Future<String> makeRequest(int id) async {
-    url="$url/travel-events/$id";
-    var response = await http.get(Uri.parse(url), headers: {'Accept': 'application/json'});
-    var extractData = jsonDecode(response.body);
-    asd=extractData['id'];
-    return response.body;
-  }
 
-  Widget buildDialog(BuildContext context, int id) {
-    makeRequest(id);
-    exdestiny.text=asd.toString();
-    exdeparture_date.text="aaf";
-    exseating.text="aaf";
-    exstarting_point.text="aaf";
+  String url = "https://be-trip-back322.herokuapp.com/api/v1/travelers";
+  late TravelEvent event3;
+
+  Widget buildDialog(BuildContext context, int id,TravelEvent event) {
+    makeRequest(event.id);
+    exdestiny.text=event.destiny.toString();
+    exdeparture_date.text=event.departureDate.toString();
+    exseating.text=event.seating.toString();
+    exstarting_point.text=event.startingPoint.toString();
     return AlertDialog(
     title: Text("EDIT YOUR TRAVEL EVENT"),
       content:  Form(
@@ -103,7 +95,19 @@ class EditTravelEventDialog{
       actions: <Widget>[
         ElevatedButton(
             onPressed: (){
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Se edito exitosamente")));
+              event.destiny=exdestiny.text;
+              event.seating=int.parse(exseating.text);
+              event.departureDate=exdeparture_date.text;
+              event.startingPoint=exstarting_point.text;
+              event3.destiny=event.destiny;
+              event3.seating=event.seating;
+              event3.departureDate=event.departureDate;
+              event3.startingPoint=event.startingPoint;
+              update(id, event.id, event3);
+              if(_formKey.currentState!.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Se edito exitosamente")));
+                Navigator.pop(context);
+              }
             },
             child: Text("Guardar")
         ),
@@ -116,5 +120,25 @@ class EditTravelEventDialog{
       ],
     );
   }
+  Future update(int travelerId,int  eventId, TravelEvent event) async {
+    url="$url/$travelerId/travel-events/$eventId";
+    var response = await http.put(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'},
+        body: event.toJson()
+    );
+  }
+  Future<TravelEvent> makeRequest(int id) async {
+    String url = "https://be-trip-back322.herokuapp.com/api/v1";
+    url="$url/travel-events/$id";
+    var response = await http.get(Uri.parse(url), headers: {'Accept': 'application/json'});
+    if (response.statusCode == 200) {
+        event3=TravelEvent.fromMap2(jsonDecode(response.body));
+      return TravelEvent.fromMap2(jsonDecode(response.body));
 
+    } else {
+      throw Exception('Failed to load album');
+    }
+  }
 }

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:mobile_app_flutter/travelers/UI/TravelerSelectedTravelEvent.dart';
+import 'package:mobile_app_flutter/travelers/models/TravelEvent.dart';
 
 class TravelerEvents extends StatefulWidget {
   const TravelerEvents({Key? key}) : super(key: key);
@@ -13,10 +14,15 @@ class TravelerEvents extends StatefulWidget {
 
 class _TravelerEventsState extends State<TravelerEvents> {
   String url = "https://be-trip-back322.herokuapp.com/api/v1/travel-events";
-  List events = [];
+  List<TravelEvent> events = [];
+  @override
+  void initState() {
+    super.initState();
+    makeRequest();
+  }
   @override
   Widget build(BuildContext context) {
-    makeRequest();
+
     return Scaffold(
       appBar: AppBar(
         title:  Text("Eventos de Viaje Disponibles"),
@@ -56,15 +62,15 @@ class _TravelerEventsState extends State<TravelerEvents> {
                                   textAlign: TextAlign.left,
                                 ),
                                 CircleAvatar(
-                                  backgroundImage: NetworkImage(events[index]['travelerProfilePhotofUrl']),
+                                  backgroundImage: NetworkImage(events[index].travelerProfilePhotofUrl),
                                 )
                               ],
                             ),
                             Image(
-                                image: NetworkImage(events[index]['destinyUrl'])
+                                image: NetworkImage(events[index].destinyUrl)
                             ),
                             Text(
-                              events[index]['destiny'],
+                              events[index].destiny,
                               style: TextStyle(
                                 fontFamily: 'Avenir',
                                 fontSize: 44,
@@ -74,7 +80,7 @@ class _TravelerEventsState extends State<TravelerEvents> {
                               textAlign: TextAlign.left,
                             ),
                             Text(
-                              events[index]['starting_point'],
+                              events[index].startingPoint,
                               style: TextStyle(
                                 fontFamily: 'Avenir',
                                 fontSize: 23,
@@ -84,7 +90,7 @@ class _TravelerEventsState extends State<TravelerEvents> {
                               textAlign: TextAlign.left,
                             ),
                             Text(
-                              events[index]['departure_date'],
+                              events[index].departureDate,
                               style: TextStyle(
                                 fontFamily: 'Avenir',
                                 fontSize: 16,
@@ -99,7 +105,7 @@ class _TravelerEventsState extends State<TravelerEvents> {
                                 ElevatedButton(
                                     onPressed: (){
                                       Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => const SelectedTravelEvent()));
+                                          MaterialPageRoute(builder: (context) =>  SelectedTravelEvent(events[index].id)));
                                     },
                                     child: Text(
                                       'Know more',
@@ -135,10 +141,20 @@ class _TravelerEventsState extends State<TravelerEvents> {
     var response =
         await http.get(Uri.parse(url), headers: {'Accept': 'application/json'});
 
-    setState(() {
-      var extractData = jsonDecode(response.body);
-      events = extractData['content'];
-    });
-    return response.body;
+    final Map<String,dynamic>travelEventMap=jsonDecode(response.body);
+    List<dynamic> data=travelEventMap["content"];
+    if (response.statusCode == 200) {
+      setState(() {
+        for (var data in data){
+          final temp=TravelEvent.fromMap(data);
+          events.add(temp);
+        }
+      });
+      return response.body;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
   }
 }
