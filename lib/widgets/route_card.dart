@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/drivers/models/route.dart';
 
 class RouteCard extends StatelessWidget {
-  
   final DriverRoute route;
 
   const RouteCard({super.key, required this.route});
@@ -32,104 +31,7 @@ class RouteCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Destino:',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                route.destiny,
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Hora de partida:',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                route.departureTime,
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Asientos:',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${route.seating}',
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                'Punto de partida:',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                route.startingPoint,
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Text(
-                                'Día de partida:',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                route.departureDate,
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Costo:',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${route.cost}',
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  _Data(route: route),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -147,6 +49,95 @@ class RouteCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Data extends StatelessWidget {
+  const _Data({
+    Key? key,
+    required this.route,
+  }) : super(key: key);
+
+  final DriverRoute route;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _DataLeft(route: route),
+        _DataRight(route: route),
+      ],
+    );
+  }
+}
+
+class _DataRight extends StatelessWidget {
+  const _DataRight({
+    Key? key,
+    required this.route,
+  }) : super(key: key);
+
+  final DriverRoute route;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _DataPair(subTitle: 'Punto de partida:', data: route.startingPoint,),
+        _DataPair(subTitle: 'Día de partida:', data: route.departureDate),
+        _DataPair(subTitle: 'Costo', data: '${route.cost}')
+      ],
+    );
+  }
+}
+
+class _DataPair extends StatelessWidget {
+  const _DataPair({
+    Key? key,
+    required this.subTitle, 
+    required this.data,
+  }) : super(key: key);
+
+  final String subTitle;
+  final String data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          subTitle,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          data,
+          style: const TextStyle(fontSize: 16),
+        ),
+      ],
+    );
+  }
+}
+
+class _DataLeft extends StatelessWidget {
+  const _DataLeft({
+    Key? key,
+    required this.route,
+  }) : super(key: key);
+
+  final DriverRoute route;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _DataPair(subTitle: 'destino', data: route.destiny),
+        _DataPair(subTitle: 'Hora de partida:', data: route.departureTime),
+        _DataPair(subTitle: 'Asientos:', data: '${route.seating}')
+      ],
     );
   }
 }

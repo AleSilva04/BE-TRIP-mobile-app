@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_routes.dart';
-import 'package:mobile_app_flutter/drivers/providers/drivers_provider.dart';
+import 'package:mobile_app_flutter/drivers/services/drivers_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'login/UI/login.dart';
