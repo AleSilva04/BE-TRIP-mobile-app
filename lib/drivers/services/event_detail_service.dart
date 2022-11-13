@@ -36,18 +36,10 @@ class EventDetailService extends ChangeNotifier{
           //temp.id = key as int?;
           passengers.add(tempPassenger);
       }
-
-    
-
-      print(passengers[1].name);
       isLoading = false;
       notifyListeners();
      
       return passengers;
-
-      ;
-      
-
   }
   
   /**TODO fetch of travel events*/

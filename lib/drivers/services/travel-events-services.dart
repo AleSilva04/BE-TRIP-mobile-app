@@ -33,7 +33,6 @@ class TravelEventsServices extends ChangeNotifier{
           //temp.id = key as int?;
           travelEvents.add(temp);
       }
-      print(travelEvents[0].destinyUrl);
       isLoading = false;
       notifyListeners();
      
