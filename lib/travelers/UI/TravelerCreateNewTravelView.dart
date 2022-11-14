@@ -18,6 +18,10 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Creación de Viaje'),
+        actions: [
+          Image(image: NetworkImage("https://astelus.com/wp-content/viajes/Lago-Moraine-Parque-Nacional-Banff-Alberta-Canada.jpg")
+            ,height: 30,)
+        ],
         leading: IconButton(
           icon: Icon(
               Icons.arrow_back,
@@ -25,15 +29,8 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
           ),
           onPressed: (){},
         ),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Colors.white,
-              ),
-              onPressed: (){}
-          )
-        ],
+
+
       ),
       body: Container(
         padding: EdgeInsets.only(left: 15, top: 20, right: 15),
@@ -43,51 +40,6 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
           },
           child: ListView(
             children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 4, color: Colors.white60),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1)
-                            )
-                          ],
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage('https://astelus.com/wp-content/viajes/Lago-Moraine-Parque-Nacional-Banff-Alberta-Canada.jpg')
-                          )
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                width: 4,
-                                color: Colors.white
-                            ),
-                            color: Colors.blue
-                        ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
               SizedBox(height: 30),
               buildTextFild("Fecha de Viaje", "2022-12-12", false),
               buildTextFild("Cantidad de Pasajeros", "10", false),
