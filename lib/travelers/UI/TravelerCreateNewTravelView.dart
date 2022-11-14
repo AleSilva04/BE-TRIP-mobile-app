@@ -1,52 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-
-import '../models/UserProfile.dart';
-import 'TravelerCreateNewTravelView.dart';
-import 'Traveler_Profile_Edit.dart';
-
-
-class Profile_Traveler extends StatefulWidget {
-  const Profile_Traveler({Key? key}) : super(key: key);
+class Traveler_newTravel extends StatefulWidget {
+  const Traveler_newTravel({Key? key}) : super(key: key);
 
   @override
-  State<Profile_Traveler> createState() => _Profile_TravelerState();
+  State<Traveler_newTravel> createState() => _Traveler_newTravelState();
 }
 
-class _Profile_TravelerState extends State<Profile_Traveler> {
-  final String _baseUrl = 'be-trip-back322.herokuapp.com';
-  final List<UserProfile> profiles = [];
-  late UserProfile profileSelected;
-
-  Future<String> makeRequest() async {
-    final url = Uri.https(_baseUrl,'/api/v1/travelers');
-    final resp =await http.get(url);
-    final Map<String,dynamic> UserProfileMap = json.decode(resp.body);
-    List<dynamic> data = UserProfileMap["content"];
-
-    setState(() {
-      for(var data in data){
-        final temp = UserProfile.fromMap(data);
-        profiles.add(temp);
-      }
-    });
-
-    print(UserProfileMap);
-    print("nombre: " + profiles[0].name.toString());
-    print("apellido: "+profiles[0].email.toString());
-    print("apellido: "+profiles[0].pfp.toString());
-
-    return resp.body;
-  }
-
-  @override
-  void initState(){
-    this.makeRequest();
-  }
+class _Traveler_newTravelState extends State<Traveler_newTravel> {
 
   bool isObscuredPassword = true;
 
@@ -54,7 +17,7 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
+        title: Text('Creación de Viaje'),
         leading: IconButton(
           icon: Icon(
               Icons.arrow_back,
@@ -95,48 +58,51 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
                                 color: Colors.black.withOpacity(0.1)
                             )
                           ],
-                          shape: BoxShape.circle,
+                          shape: BoxShape.rectangle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(profiles[0].pfp.toString())
+                              image: NetworkImage('https://astelus.com/wp-content/viajes/Lago-Moraine-Parque-Nacional-Banff-Alberta-Canada.jpg')
                           )
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 135.0, left:40.0),
-                      child: Text(profiles[0].name.toString(),style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 24.0,
-
-                      )),
-                    ),
-
-                    Container(
-                      margin: EdgeInsets.only(top: 165.0, right:110.0),
-                      child: Text(profiles[0].email.toString(),style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 20.0,
-                      )),
-                    ),
-
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                width: 4,
+                                color: Colors.white
+                            ),
+                            color: Colors.blue
+                        ),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
+              SizedBox(height: 30),
+              buildTextFild("Fecha de Viaje", "2022-12-12", false),
+              buildTextFild("Cantidad de Pasajeros", "10", false),
+              buildTextFild("Hora de Salida", "4:00 am", false),
+              buildTextFild("Lugar de Recojo", "Jr. Hernando Lurin", false),
+              buildTextFild("Metodo de Pago", "Tarjeta", false),
+              buildTextFild("Costo por Asiento", "250", false),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(
                     onPressed: (){
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context)=> Traveler_newTravel()));
-
                     },
-                    child: Text("New Travel",style: TextStyle(
+                    child: Text("Cancel",style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,
                         color: Colors.black
@@ -147,13 +113,8 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context)=> Profile_Options()));
-                    },
-                    child: Text("Options",style: TextStyle(
+                    onPressed: (){},
+                    child: Text("Reservar",style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,
                         color: Colors.white
@@ -173,7 +134,6 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
       ),
     );
   }
-
 
 
   Widget buildTextFild(String labelText, String placeHolder, bool isPasswordTextField){
@@ -202,4 +162,3 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
   }
 
 }
-
