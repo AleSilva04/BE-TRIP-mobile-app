@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app_flutter/drivers/UI/driver_routes.dart';
 import 'package:mobile_app_flutter/drivers/services/drivers_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -32,12 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green
       ),
-      initialRoute: 'login',
-      //home: Login(),
-      routes: {
-        'login':(context) => const Login(),
-        'driverRoutes':(context) => const DriverRoutes(),
-      },
+      home: const Login(),
     );
   }
 }

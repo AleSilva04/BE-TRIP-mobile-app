@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app_flutter/drivers/UI/driver_routes.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerEvents.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerMyEvents.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerRoutes.dart';
@@ -14,31 +13,25 @@ class TravelerHome extends StatefulWidget {
 
 class _TravelerHomeState extends State<TravelerHome> {
   int currentTab = 0;
-  final List<Widget> screens = [
-    TravelerEvents(),
-    TravelerRoutes(),
-    TravelerMyEvents(),
-    TravelerSettings()
-  ];
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = TravelerEvents();
+  Widget currentScreen = const TravelerEvents();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageStorage(
-        child: currentScreen,
         bucket: bucket,
+        child: currentScreen,
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: () {},
         backgroundColor: Colors.blueAccent,
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 10,
-        child: Container(
+        child: SizedBox(
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,9 +43,7 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        //TODO: delete driver Routes an change to traveler events
-                        //currentScreen=TravelerEvents();
-                        currentScreen = DriverRoutes();
+                        currentScreen= const TravelerEvents();
                         currentTab = 0;
                       });
                     },
@@ -77,7 +68,7 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        currentScreen = TravelerRoutes();
+                        currentScreen = const TravelerRoutes();
                         currentTab = 1;
                       });
                     },
@@ -107,7 +98,7 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        currentScreen = TravelerMyEvents();
+                        currentScreen = const TravelerMyEvents();
                         currentTab = 2;
                       });
                     },
@@ -132,7 +123,7 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        currentScreen = TravelerSettings();
+                        currentScreen = const TravelerSettings();
                         currentTab = 3;
                       });
                     },
