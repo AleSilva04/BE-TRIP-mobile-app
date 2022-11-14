@@ -22,9 +22,8 @@ class _LoginState extends State<Login> {
       ),
       floatingActionButton: FloatingActionButton(
        onPressed: (){
-          Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const TravelerHome()));
-          //Navigator.push(context, MaterialPageRoute(builder: (context) => const DriverHome()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const TravelerHome()));
+         // Navigator.push(context, MaterialPageRoute(builder: (context) => const DriverHome()));
        },
       child: const Icon(Icons.login),
       ),

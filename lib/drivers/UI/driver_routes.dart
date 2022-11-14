@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/drivers/models/route.dart';
 import 'package:mobile_app_flutter/drivers/services/drivers_provider.dart';
-import 'package:mobile_app_flutter/widgets/route_card.dart';
+import 'package:mobile_app_flutter/drivers/widgets/route_card.dart';
 import 'package:provider/provider.dart';
 
 class DriverRoutes extends StatelessWidget {
