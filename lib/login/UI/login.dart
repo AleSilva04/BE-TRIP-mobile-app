@@ -16,6 +16,7 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: Text("LOGIN"),
       ),
+
 body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -88,7 +89,7 @@ body: Column(
             ),
             )
         ],
-      ),
+     
     );
   }
 }
