@@ -1,37 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app_flutter/travelers/UI/TravelerEvents.dart';
-import 'package:mobile_app_flutter/travelers/UI/TravelerMyEvents.dart';
-import 'package:mobile_app_flutter/travelers/UI/TravelerRoutes.dart';
-import 'package:mobile_app_flutter/travelers/UI/TravelerSetting.dart';
 
-class TravelerHome extends StatefulWidget {
-  const TravelerHome({Key? key}) : super(key: key);
+
+
+class DriverHome extends StatefulWidget {
+  const DriverHome({Key? key}) : super(key: key);
 
   @override
-  State<TravelerHome> createState() => _TravelerHomeState();
+  State<DriverHome> createState() => _DriverHomeState();
 }
 
-class _TravelerHomeState extends State<TravelerHome> {
-  int currentTab = 0;
-  final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = const TravelerEvents();
+class _DriverHomeState extends State<DriverHome> {
+
+  int currentTab=0;
+  final List<Widget> screens=[
+    //Eventos
+  ];
+  final PageStorageBucket bucket= PageStorageBucket();
+  Widget currentScreen = //Clase Driver Events
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageStorage(
-        bucket: bucket,
         child: currentScreen,
+        bucket: bucket,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        child: Icon(Icons.add),
+        onPressed: (){
+
+        },
         backgroundColor: Colors.blueAccent,
-        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+        shape: CircularNotchedRectangle(),
         notchMargin: 10,
-        child: SizedBox(
+        child: Container(
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,35 +45,35 @@ class _TravelerHomeState extends State<TravelerHome> {
                 children: [
                   MaterialButton(
                     minWidth: 20,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen= const TravelerEvents();
-                        currentTab = 0;
-                      });
+                    onPressed: (){
+                        setState(() {
+                          currentScreen= //Clase Driver Events
+                          currentTab=0;
+                        });
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.track_changes_sharp,
-                          color: currentTab == 0 ? Colors.blue : Colors.grey,
+                          color: currentTab==0?Colors.blue:Colors.grey,
                         ),
                         Text(
                           'Travel-Events',
                           style: TextStyle(
-                              color:
-                                  currentTab == 0 ? Colors.blue : Colors.grey,
-                              fontSize: 10),
+                            color: currentTab==0?Colors.blue:Colors.grey,
+                            fontSize: 10
+                          ),
                         )
                       ],
                     ),
-                  ),
+                ),
                   MaterialButton(
                     minWidth: 20,
-                    onPressed: () {
+                    onPressed: (){
                       setState(() {
-                        currentScreen = const TravelerRoutes();
-                        currentTab = 1;
+                        currentScreen= // Clase Driver Routes
+                        currentTab=1;
                       });
                     },
                     child: Column(
@@ -77,14 +81,14 @@ class _TravelerHomeState extends State<TravelerHome> {
                       children: [
                         Icon(
                           Icons.route,
-                          color: currentTab == 1 ? Colors.blue : Colors.grey,
+                          color: currentTab==1?Colors.blue:Colors.grey,
                         ),
                         Text(
                           'See Routes',
                           style: TextStyle(
-                              color:
-                                  currentTab == 1 ? Colors.blue : Colors.grey,
-                              fontSize: 10),
+                              color: currentTab==1?Colors.blue:Colors.grey,
+                            fontSize: 10
+                          ),
                         )
                       ],
                     ),
@@ -96,10 +100,10 @@ class _TravelerHomeState extends State<TravelerHome> {
                 children: [
                   MaterialButton(
                     minWidth: 20,
-                    onPressed: () {
+                    onPressed: (){
                       setState(() {
-                        currentScreen = const TravelerMyEvents();
-                        currentTab = 2;
+                        currentScreen= //Clase Driver My Routes
+                        currentTab=2;
                       });
                     },
                     child: Column(
@@ -107,24 +111,24 @@ class _TravelerHomeState extends State<TravelerHome> {
                       children: [
                         Icon(
                           Icons.travel_explore,
-                          color: currentTab == 2 ? Colors.blue : Colors.grey,
+                          color: currentTab==2?Colors.blue:Colors.grey,
                         ),
                         Text(
-                          'My Travel-Events',
+                          'My Routes',
                           style: TextStyle(
-                              color:
-                                  currentTab == 2 ? Colors.blue : Colors.grey,
-                              fontSize: 10),
+                              color: currentTab==2?Colors.blue:Colors.grey,
+                            fontSize: 10
+                          ),
                         )
                       ],
                     ),
                   ),
                   MaterialButton(
                     minWidth: 20,
-                    onPressed: () {
+                    onPressed: (){
                       setState(() {
-                        currentScreen = const TravelerSettings();
-                        currentTab = 3;
+                        currentScreen= //Clase Driver Settings
+                        currentTab=3;
                       });
                     },
                     child: Column(
@@ -132,14 +136,14 @@ class _TravelerHomeState extends State<TravelerHome> {
                       children: [
                         Icon(
                           Icons.settings,
-                          color: currentTab == 3 ? Colors.blue : Colors.grey,
+                          color: currentTab==3?Colors.blue:Colors.grey,
                         ),
                         Text(
                           'My Settings',
                           style: TextStyle(
-                              color:
-                                  currentTab == 3 ? Colors.blue : Colors.grey,
-                              fontSize: 10),
+                              color: currentTab==3?Colors.blue:Colors.grey,
+                            fontSize: 10
+                          ),
                         )
                       ],
                     ),

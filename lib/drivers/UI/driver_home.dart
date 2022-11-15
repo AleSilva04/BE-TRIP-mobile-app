@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/drivers/UI/driver_routes.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerEvents.dart';
-import 'package:mobile_app_flutter/travelers/UI/TravelerMyEvents.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerRoutes.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerSetting.dart';
 
-class TravelerHome extends StatefulWidget {
-  const TravelerHome({Key? key}) : super(key: key);
+class DriverHome extends StatefulWidget {
+  const DriverHome({Key? key}) : super(key: key);
 
   @override
-  State<TravelerHome> createState() => _TravelerHomeState();
+  State<DriverHome> createState() => _DriverHomeState();
 }
 
-class _TravelerHomeState extends State<TravelerHome> {
+class _DriverHomeState extends State<DriverHome> {
   int currentTab = 0;
+  final List<Widget> screens = [
+    //Eventos
+  ];
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = const TravelerEvents();
+
+  //TODO: change current screen to event screen
+  Widget currentScreen = const DriverRoutes();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +48,9 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        currentScreen= const TravelerEvents();
+                        //TODO: change to driver events screen
+                        currentScreen =
+                            const TravelerEvents(); //Clase Driver Events
                         currentTab = 0;
                       });
                     },
@@ -55,7 +62,7 @@ class _TravelerHomeState extends State<TravelerHome> {
                           color: currentTab == 0 ? Colors.blue : Colors.grey,
                         ),
                         Text(
-                          'Travel-Events',
+                          'Driver-Events',
                           style: TextStyle(
                               color:
                                   currentTab == 0 ? Colors.blue : Colors.grey,
@@ -68,7 +75,9 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const TravelerRoutes();
+                        //TODO: add routes screen
+                        currentScreen =
+                            const TravelerRoutes(); // Clase Driver Routes
                         currentTab = 1;
                       });
                     },
@@ -80,7 +89,7 @@ class _TravelerHomeState extends State<TravelerHome> {
                           color: currentTab == 1 ? Colors.blue : Colors.grey,
                         ),
                         Text(
-                          'See Routes',
+                          'Routes',
                           style: TextStyle(
                               color:
                                   currentTab == 1 ? Colors.blue : Colors.grey,
@@ -98,7 +107,8 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const TravelerMyEvents();
+                        currentScreen =
+                            const DriverRoutes(); //Clase Driver My Routes
                         currentTab = 2;
                       });
                     },
@@ -110,7 +120,7 @@ class _TravelerHomeState extends State<TravelerHome> {
                           color: currentTab == 2 ? Colors.blue : Colors.grey,
                         ),
                         Text(
-                          'My Travel-Events',
+                          'My Routes',
                           style: TextStyle(
                               color:
                                   currentTab == 2 ? Colors.blue : Colors.grey,
@@ -123,7 +133,9 @@ class _TravelerHomeState extends State<TravelerHome> {
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const TravelerSettings();
+                        //TODO: add sdriver settings screen
+                        currentScreen =
+                            const TravelerSettings(); //Clase Driver Settings
                         currentTab = 3;
                       });
                     },
