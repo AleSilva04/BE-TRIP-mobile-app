@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'TravelerHome.dart';
+
 class Traveler_newTravel extends StatefulWidget {
   const Traveler_newTravel({Key? key}) : super(key: key);
 
@@ -53,6 +55,8 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                 children: [
                   OutlinedButton(
                     onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const TravelerHome()));
                     },
                     child: Text("Cancel",style: TextStyle(
                         fontSize: 15,
@@ -65,7 +69,10 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const TravelerHome()));
+                    },
                     child: Text("Reservar",style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,

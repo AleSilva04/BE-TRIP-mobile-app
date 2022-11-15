@@ -4,6 +4,8 @@ import 'package:mobile_app_flutter/travelers/UI/TravelerEvents.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerRoutes.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerSetting.dart';
 
+import '../screens/event_travel_screen.dart';
+
 class DriverHome extends StatefulWidget {
   const DriverHome({Key? key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class _DriverHomeState extends State<DriverHome> {
   final PageStorageBucket bucket = PageStorageBucket();
 
   //TODO: change current screen to event screen
-  Widget currentScreen = const DriverRoutes();
+  Widget currentScreen = const EventTravelScreen();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,9 @@ class _DriverHomeState extends State<DriverHome> {
         child: currentScreen,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+
+        },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),
       ),
@@ -50,7 +54,7 @@ class _DriverHomeState extends State<DriverHome> {
                       setState(() {
                         //TODO: change to driver events screen
                         currentScreen =
-                            const TravelerEvents(); //Clase Driver Events
+                            const EventTravelScreen(); //Clase Driver Events
                         currentTab = 0;
                       });
                     },

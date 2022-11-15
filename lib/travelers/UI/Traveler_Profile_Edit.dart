@@ -5,6 +5,8 @@ import '../models/UserProfile.dart';
 
 import 'package:http/http.dart' as http;
 
+import 'TravelerProfileView.dart';
+
 
 class Profile_Options extends StatefulWidget {
   const Profile_Options({Key? key}) : super(key: key);
@@ -132,6 +134,8 @@ class _Profile_OptionsState extends State<Profile_Options> {
                 children: [
                   OutlinedButton(
                     onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const Profile_Traveler()));
                     },
                     child: Text("Cancel",style: TextStyle(
                         fontSize: 15,
@@ -144,7 +148,10 @@ class _Profile_OptionsState extends State<Profile_Options> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const Profile_Traveler()));
+                    },
                     child: Text("Save",style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,

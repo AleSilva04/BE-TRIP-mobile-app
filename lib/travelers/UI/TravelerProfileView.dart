@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/UserProfile.dart';
 import 'TravelerCreateNewTravelView.dart';
+import 'TravelerHome.dart';
 import 'Traveler_Profile_Edit.dart';
 
 
@@ -57,10 +58,13 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
         title: Text('User Profile'),
         leading: IconButton(
           icon: Icon(
-              Icons.arrow_back,
+              Icons.home,
               color:Colors.white
           ),
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const TravelerHome()));
+          },
         ),
         actions: [
           IconButton(

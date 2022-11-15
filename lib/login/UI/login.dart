@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/drivers/UI/driver_home.dart';
 //import 'package:mobile_app_flutter/drivers/UI/driver_home.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerHome.dart';
 
@@ -78,19 +79,28 @@ body: Column(
                         ),
                         FloatingActionButton(
                           onPressed: (){
+                            //networking para login como traveler
                             Navigator.push(context,
                             MaterialPageRoute(builder: (context) => const TravelerHome()));
                           },
-                          child: Icon(Icons.login),
-                        ),    
-                      ],
+                          child: Icon(Icons.person),
+                        ),
+                        FloatingActionButton(
+                          onPressed: (){
+                            //networking para login como driver
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => const DriverHome()));
+                          },
+                          child: Icon(Icons.drive_eta),
+                        ),
+                    ],
                   ),
                   )
               ]
             ),
             )
         ],
-     
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_app_flutter/login/UI/login.dart';
 import 'dart:convert';
 
 import 'package:mobile_app_flutter/travelers/UI/EditTravelerEventDialog.dart';
@@ -31,6 +32,16 @@ class _TravelerMyEventsState extends State<TravelerMyEvents> {
        appBar: AppBar(
          title:  Text("Mis Eventos"),
          centerTitle: true,
+         leading: IconButton(
+           icon: Icon(
+               Icons.logout,
+               color:Colors.red
+           ),
+           onPressed: (){
+             Navigator.push(context,
+                 MaterialPageRoute(builder: (context) => const Login()));
+           },
+         ),
        ),
       body: Center(
         child: ListView.builder(

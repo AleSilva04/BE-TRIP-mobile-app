@@ -4,6 +4,8 @@ import 'package:mobile_app_flutter/travelers/UI/TravelerMyEvents.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerRoutes.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerSetting.dart';
 
+import 'TravelerCreateNewTravelView.dart';
+
 class TravelerHome extends StatefulWidget {
   const TravelerHome({Key? key}) : super(key: key);
 
@@ -23,7 +25,10 @@ class _TravelerHomeState extends State<TravelerHome> {
         child: currentScreen,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Traveler_newTravel()));
+        },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),
       ),
