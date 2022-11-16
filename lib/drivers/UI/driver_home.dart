@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_routes.dart';
+import 'package:mobile_app_flutter/drivers/UI/driver_settings.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerEvents.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerRoutes.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerSetting.dart';
@@ -30,6 +31,7 @@ class _DriverHomeState extends State<DriverHome> {
         child: currentScreen,
       ),
       floatingActionButton: FloatingActionButton(
+       
         onPressed: () {
 
         },
@@ -37,7 +39,9 @@ class _DriverHomeState extends State<DriverHome> {
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      
       bottomNavigationBar: BottomAppBar(
+
         shape: const CircularNotchedRectangle(),
         notchMargin: 10,
         child: SizedBox(
@@ -45,10 +49,14 @@ class _DriverHomeState extends State<DriverHome> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+              
               Row(
+                
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  
                   MaterialButton(
+                    
                     minWidth: 20,
                     onPressed: () {
                       setState(() {
@@ -59,6 +67,7 @@ class _DriverHomeState extends State<DriverHome> {
                       });
                     },
                     child: Column(
+                      
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -76,8 +85,10 @@ class _DriverHomeState extends State<DriverHome> {
                     ),
                   ),
                   MaterialButton(
+                    
                     minWidth: 20,
                     onPressed: () {
+                      
                       setState(() {
                         //TODO: add routes screen
                         currentScreen =
@@ -139,7 +150,7 @@ class _DriverHomeState extends State<DriverHome> {
                       setState(() {
                         //TODO: add sdriver settings screen
                         currentScreen =
-                            const TravelerSettings(); //Clase Driver Settings
+                            const DriverSettings(); //Clase Driver Settings
                         currentTab = 3;
                       });
                     },

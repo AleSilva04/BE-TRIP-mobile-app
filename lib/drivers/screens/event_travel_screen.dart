@@ -26,7 +26,7 @@ class EventTravelScreen extends StatelessWidget {
           travelEventService.selectedEvent = travelEventService.travelEvents[index].copy();
            Navigator.push(
             contex,
-            MaterialPageRoute(builder: (contex) => EventDetailScreen())
+            MaterialPageRoute(builder: (contex) =>const EventDetailScreen())
            );
            },
         child: TravelEventCard(
