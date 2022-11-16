@@ -7,7 +7,7 @@ class EventImage extends StatelessWidget {
     final int? id;
     final int? driverId;
     final String destiny;
-    final String destinyUrl;
+    final String? destinyUrl;
     final int seating;
     final String starting_point;
     final String departure_time;
@@ -34,7 +34,7 @@ class EventImage extends StatelessWidget {
           fit:BoxFit.cover,
         )
         :FadeInImage(
-          image: NetworkImage(destinyUrl),
+          image: NetworkImage(destinyUrl!),
           placeholder:const AssetImage('https://www.citypng.com/public/uploads/preview/loading-load-icon-transparent-png-11639609114lctjenyas8.png'),
           fit: BoxFit.cover,
         ),
