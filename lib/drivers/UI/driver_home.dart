@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/drivers/UI/driver_general_routes.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_routes.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_settings.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerEvents.dart';
@@ -92,7 +93,7 @@ class _DriverHomeState extends State<DriverHome> {
                       setState(() {
                         //TODO: add routes screen
                         currentScreen =
-                            const TravelerRoutes(); // Clase Driver Routes
+                            const DriverGeneralRoutes(); // Clase Driver Routes
                         currentTab = 1;
                       });
                     },

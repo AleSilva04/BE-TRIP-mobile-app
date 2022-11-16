@@ -33,6 +33,7 @@ class _TravelerMyEventsState extends State<TravelerMyEvents> {
          title:  Text("Mis Eventos"),
          centerTitle: true,
          leading: IconButton(
+          
            icon: Icon(
                Icons.logout,
                color:Colors.red
