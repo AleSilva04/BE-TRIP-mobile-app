@@ -78,6 +78,7 @@ body: Column(
                           height: 10,
                         ),
                         FloatingActionButton(
+                          heroTag: 'btnTraveller',
                           onPressed: (){
                             //networking para login como traveler
                             Navigator.push(context,
@@ -86,6 +87,7 @@ body: Column(
                           child: Icon(Icons.person),
                         ),
                         FloatingActionButton(
+                          heroTag: 'btnDriver',
                           onPressed: (){
                             //networking para login como driver
                             Navigator.push(context,
