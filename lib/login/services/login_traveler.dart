@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app_flutter/login/models/traveler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthTravelerProvider {
   static Future<bool> validateUser(String email, String password) async {
-    //final storage = new FlutterSecureStorage();
 
     final urlTraveler = Uri.parse(
         "https://be-trip-back322.herokuapp.com/api/v1/travelers/auth/log-in");
@@ -19,11 +19,16 @@ class AuthTravelerProvider {
           'password': password,
         }));
 
+    final userId = await SharedPreferences.getInstance();
+    final userName = await SharedPreferences.getInstance();
+
     if (responseTraveler.statusCode == 200) {
       final decodedResp = json.decode(responseTraveler.body);
       final sample = Traveler.objJson(decodedResp);
-      //storage.write(key: 'idUser', value: sample.id.toString());
-      //storage.write(key: 'typeUser', value: 'Teacher');
+      await userId.setInt('userId', sample.id);
+      await userName.setString('userName', sample.name);
+      print(userId.getInt('userId'));
+      print(userName.getString('userName'));
       print('validate Traveler');
       return true;
     } else {
