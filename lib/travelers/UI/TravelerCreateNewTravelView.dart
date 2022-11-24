@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/Passengers.dart';
 import '../models/TravelEvent.dart';
 import 'TravelerHome.dart';
 
@@ -16,7 +17,7 @@ class Traveler_newTravel extends StatefulWidget {
 class _Traveler_newTravelState extends State<Traveler_newTravel> {
 
   bool isObscuredPassword = true;
-  GlobalKey<FormState>_formKey=GlobalKey<FormState>();
+   GlobalKey<FormState>_formKey=GlobalKey<FormState>();
   String url = "https://be-trip-back322.herokuapp.com/api/v1/travelers";
   final exdestiny = TextEditingController();
   final destinyUrl = TextEditingController();
@@ -27,9 +28,10 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
   final excost= TextEditingController();
   final extype= TextEditingController();
   final explate= TextEditingController();
-
+  bool nice=false;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Creación de Viaje'),
@@ -228,23 +230,8 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){
-                      TravelEvent a=TravelEvent(
-                          destiny: exdestiny.text.toString(),
-                          destinyUrl: destinyUrl.text.toString(),
-                          seating: int.parse(exseating.text),
-                          startingPoint: exstarting_point.text.toString(),
-                          departureTime: departure_time.text.toString(),
-                          departureDate: departure_date.text.toString(),
-                          cost: int.parse(exseating.text),
-                          type: extype.text.toString(),
-                          driverId: -1, id: 0,
-                          travelerProfilePhotofUrl: 'https://www.sopitas.com/wp-content/uploads/2022/05/perrito-cheems-esta-enfermo-meme.png');
-                      a.plate=explate.text.toString();
-                      a.passengers=List.empty();
-                      create(1, a);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const TravelerHome()));
+                    onPressed:(){
+                      createFunction();
                     },
                     child: Text("Crear",style: TextStyle(
                         fontSize: 15,
@@ -277,5 +264,24 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
     );
     print(response.body);
   }
+  void createFunction(){
+    TravelEvent a=TravelEvent(
+        destiny: exdestiny.text.toString(),
+        destinyUrl: destinyUrl.text.toString(),
+        seating: int.parse(exseating.text),
+        startingPoint: exstarting_point.text.toString(),
+        departureTime: departure_time.text.toString(),
+        departureDate: departure_date.text.toString(),
+        cost: int.parse(exseating.text),
+        type: extype.text.toString(),
+        driverId: -1, id: 0,
+        travelerProfilePhotofUrl: 'https://www.sopitas.com/wp-content/uploads/2022/05/perrito-cheems-esta-enfermo-meme.png');
+    a.plate=explate.text.toString();
+    a.passengers=List.empty();
+    create(1, a);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const TravelerHome()));
+  }
+
 
 }

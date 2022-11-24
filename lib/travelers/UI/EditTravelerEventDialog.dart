@@ -3,7 +3,7 @@ import 'package:mobile_app_flutter/travelers/models/TravelEvent.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 class EditTravelEventDialog{
-  GlobalKey<FormState>_formKey=GlobalKey<FormState>();
+  final GlobalKey<FormState>_formKey=GlobalKey<FormState>();
   final exdestiny = TextEditingController();
   final exdeparture_date = TextEditingController();
   final exseating = TextEditingController();
@@ -13,6 +13,7 @@ class EditTravelEventDialog{
   late TravelEvent event3;
 
   Widget buildDialog(BuildContext context, int id,TravelEvent event) {
+
     makeRequest(event.id);
     exdestiny.text=event.destiny.toString();
     exdeparture_date.text=event.departureDate.toString();
@@ -43,7 +44,7 @@ class EditTravelEventDialog{
             TextFormField(
               controller: exdeparture_date,
               validator: (value){
-                return value!.isNotEmpty ? null:"Invalid Field";
+                return value!.isEmpty ? null:"Invalid Field";
               },
               decoration: InputDecoration(
                   hintText: "Enter Fecha de Salida",

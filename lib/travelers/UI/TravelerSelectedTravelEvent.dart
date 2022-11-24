@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobile_app_flutter/travelers/models/Passengers.dart';
 import 'dart:convert';
 
+import '../../drivers/screens/loading_screen.dart';
 import '../models/TravelEvent.dart';
 import '../models/UserProfile.dart';
 
@@ -22,6 +23,7 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
   //late int userId;
   bool isPassenger=false;
   int userId2=1;
+  bool isLoading=true;
   late UserProfile user;
   @override
   void initState() {
@@ -34,6 +36,8 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
     makeRequest(this.id);
     validateUser();
     getUser();
+    if(isLoading) return  const LoadingScreen();
+
     return Scaffold(
       body:Center(
         child: Container(
@@ -191,6 +195,7 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
     if (response.statusCode == 200) {
       setState(() {
         event=TravelEvent.fromMap2(jsonDecode(response.body));
+        isLoading=false;
       });
       return TravelEvent.fromMap2(jsonDecode(response.body));
 
