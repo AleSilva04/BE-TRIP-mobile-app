@@ -137,7 +137,7 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
                                 Divider(),
                                 Row(
                                   children: [
-                                    Icon(Icons.monetization_on_outlined,size: 30,),
+                                    Icon(Icons.person,size: 30,),
                                     Text("Pasajeros:",style: TextStyle(
                                         fontWeight: FontWeight.bold
                                     ),),
@@ -150,7 +150,9 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
                                   itemCount: (event.passengers != null)? event.passengers?.length : 0,
                                   itemBuilder: (BuildContext context, int index){
                                     return  ListTile(
-                                      leading: Icon(Icons.person,color: Colors.green,),
+                                      leading: CircleAvatar(
+                                        backgroundImage: NetworkImage(event.passengers![index].pfp),
+                                      ),
                                       title:Text(event.passengers![index].name,style: TextStyle(
                                           fontWeight: FontWeight.bold
                                       ),),

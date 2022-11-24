@@ -31,6 +31,10 @@ class _TravelerRoutesState extends State<TravelerRoutes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title:  Text("Rutas Disponibles"),
+        centerTitle: true,
+      ),
       body: Center(
           child: ListView.builder(
               itemCount: routes.isEmpty ? 0 : routes.length,
@@ -51,7 +55,7 @@ class _TravelerRoutesState extends State<TravelerRoutes> {
                         style: TextStyle(
                           fontFamily: 'Avenir',
                           fontSize: 25,
-                          color: const Color(0xff47455f),
+                          color: Colors.black,
                           fontWeight: FontWeight.w900,
                         ),
                         textAlign: TextAlign.left,
@@ -69,6 +73,16 @@ class _TravelerRoutesState extends State<TravelerRoutes> {
                             ),
                             textAlign: TextAlign.left,
                           ),
+                          Text(
+                            "Passengers:",
+                            style: TextStyle(
+                              fontFamily: 'Avenir',
+                              fontSize: 17,
+                              color:Colors.white60,
+                              fontWeight: FontWeight.w900,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
                           SizedBox(
                             height: 150,
                             child: ListView.builder(
@@ -77,8 +91,9 @@ class _TravelerRoutesState extends State<TravelerRoutes> {
                                     : 0,
                                 itemBuilder: (BuildContext context, int index2) {
                                   return ListTile(
-                                    leading: Icon(
-                                      Icons.person, color: Colors.green,),
+                                    leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(routes[index].passengers[index2].pfp),
+                                    ),
                                     title: Text(
                                       routes[index].passengers[index2].name,
                                       style: TextStyle(

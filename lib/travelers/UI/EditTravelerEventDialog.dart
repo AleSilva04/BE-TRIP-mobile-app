@@ -8,7 +8,7 @@ class EditTravelEventDialog{
   final exdeparture_date = TextEditingController();
   final exseating = TextEditingController();
   final exstarting_point= TextEditingController();
-
+  final exurltoDestyni= TextEditingController();
   String url = "https://be-trip-back322.herokuapp.com/api/v1/travelers";
   late TravelEvent event3;
 
@@ -16,6 +16,7 @@ class EditTravelEventDialog{
 
     makeRequest(event.id);
     exdestiny.text=event.destiny.toString();
+    exurltoDestyni.text=event.destinyUrl.toString();
     exdeparture_date.text=event.departureDate.toString();
     exseating.text=event.seating.toString();
     exstarting_point.text=event.startingPoint.toString();
@@ -44,7 +45,7 @@ class EditTravelEventDialog{
             TextFormField(
               controller: exdeparture_date,
               validator: (value){
-                return value!.isEmpty ? null:"Invalid Field";
+                return value!.isNotEmpty ? null:"Invalid Field";
               },
               decoration: InputDecoration(
                   hintText: "Enter Fecha de Salida",
@@ -88,6 +89,22 @@ class EditTravelEventDialog{
                       fontWeight: FontWeight.w800
                   )
               ),
+            ),
+            TextFormField(
+              controller: exurltoDestyni,
+              validator: (value){
+                return value!.isNotEmpty ? null:"Invalid Field";
+              },
+              decoration: InputDecoration(
+                  hintText: "Enter new url",
+                  border:InputBorder.none,
+                  prefixIcon: Icon(Icons.numbers),
+                  labelText: "Url",
+                  labelStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800
+                  )
+              ),
             )
           ],
         ),
@@ -100,10 +117,12 @@ class EditTravelEventDialog{
               event.seating=int.parse(exseating.text);
               event.departureDate=exdeparture_date.text;
               event.startingPoint=exstarting_point.text;
+              event.destinyUrl=exurltoDestyni.text;
               event3.destiny=event.destiny;
               event3.seating=event.seating;
               event3.departureDate=event.departureDate;
               event3.startingPoint=event.startingPoint;
+              event3.destinyUrl=event.destinyUrl;
               update(id, event.id, event3);
               if(_formKey.currentState!.validate()) {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Se edito exitosamente")));
