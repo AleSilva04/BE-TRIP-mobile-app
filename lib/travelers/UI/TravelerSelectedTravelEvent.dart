@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_app_flutter/travelers/models/Passengers.dart';
 import 'dart:convert';
 
 import '../models/TravelEvent.dart';
+import '../models/UserProfile.dart';
 
 class SelectedTravelEvent extends StatefulWidget {
   final int id;
@@ -17,14 +19,21 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
   _SelectedTravelEventState(this.id);
 
   late TravelEvent event;
+  //late int userId;
+  bool isPassenger=false;
+  int userId2=1;
+  late UserProfile user;
   @override
   void initState() {
     super.initState();
     makeRequest(this.id);
+    getUser();
   }
   @override
   Widget build(BuildContext context) {
     makeRequest(this.id);
+    validateUser();
+    getUser();
     return Scaffold(
       body:Center(
         child: Container(
@@ -151,10 +160,7 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     ElevatedButton(
-                                        onPressed: (){
-                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Se Unio exitosamente")));
-                                          Navigator.pop(context);
-                                          },
+                                        onPressed: (isPassenger==false)?()=>update(userId2, event.id, event):null,
                                         child: Text("Unirse")),
                                     ElevatedButton(
                                         onPressed: (){
@@ -191,5 +197,53 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
     } else {
       throw Exception('Failed to load album');
     }
+  }
+  void validateUser(){
+    event.passengers!.forEach((element) {
+      if(element.id==userId2){
+        isPassenger=true;
+      }
+    });
+  }
+  Future update(int travelerId,int  eventId, TravelEvent event) async {
+    String url3 = "https://be-trip-back322.herokuapp.com/api/v1/travelers";
+    url3="$url3/$travelerId/travel-events/$eventId";
+    Passenger a=Passenger(
+        id: user.id,
+        name: user.name,
+        age: user.age,
+        dni: user.dni,
+        email: user.email,
+        password: user.password,
+        phoneNumber: user.phoneNumber,
+        pfp: user.pfp,
+        puntuacion: user.puntuacion,
+        createAt: "createAt",
+        updateAt: "updateAt");
+    event.passengers!.add(a);
+    print(event.toJson());
+    var response = await http.put(
+        Uri.parse(url3),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'},
+        body: event.toJson()
+    );
+  }
+  Future getUser() async {
+
+    String url3 = "https://be-trip-back322.herokuapp.com";
+    url3="$url3/api/v1/travelers/$userId2";
+
+    var response = await http.get(Uri.parse(url3), headers: {'Accept': 'application/json'});
+    if (response.statusCode == 200) {
+      setState(() {
+        user=UserProfile.fromMap(jsonDecode(response.body));
+      });
+      return UserProfile.fromMap(jsonDecode(response.body));
+
+    } else {
+      throw Exception('Failed to load album');
+    }
+
   }
 }
