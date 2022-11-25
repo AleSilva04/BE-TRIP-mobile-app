@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/drivers/UI/edit_driver_route_dialog.dart';
 import 'package:mobile_app_flutter/drivers/models/route.dart';
 
-class RouteCard extends StatelessWidget {
+class RouteCard extends StatefulWidget {
   final DriverRoute route;
   final bool button;
 
-  const RouteCard({super.key, required this.route, required this.button,});
+  const RouteCard({
+    super.key,
+    required this.route,
+    required this.button,
+  });
+
+  @override
+  State<RouteCard> createState() => _RouteCardState();
+}
+
+class _RouteCardState extends State<RouteCard> {
+  EditDriverRouteDialog? dialog;
+
+  @override
+  void initState() {
+    dialog = EditDriverRouteDialog();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +50,23 @@ class RouteCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Column(
                 children: [
-                  _Data(route: route),
+                  _Data(route: widget.route),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if(button)
+                      if (widget.button)
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => dialog!
+                                    .buildDialog(context, 1, widget.route));
+                          },
                           child: const Text('Editar'),
                         ),
-                      if(button)
-                        ElevatedButton(onPressed: () {}, child: const Text('Eliminar'))
+                      if (widget.button)
+                        ElevatedButton(
+                            onPressed: () {}, child: const Text('Eliminar'))
                     ],
                   )
                 ],
