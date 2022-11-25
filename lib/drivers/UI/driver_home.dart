@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/drivers/UI/driver_create_new_route.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_general_routes.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_routes.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_settings.dart';
@@ -34,7 +35,8 @@ class _DriverHomeState extends State<DriverHome> {
       floatingActionButton: FloatingActionButton(
        
         onPressed: () {
-
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Driver_newRoute()));
         },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),
