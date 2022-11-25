@@ -3,8 +3,9 @@ import 'package:mobile_app_flutter/drivers/models/route.dart';
 
 class RouteCard extends StatelessWidget {
   final DriverRoute route;
+  final bool button;
 
-  const RouteCard({super.key, required this.route});
+  const RouteCard({super.key, required this.route, required this.button,});
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +36,13 @@ class RouteCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Editar'),
-                      ),
-                      ElevatedButton(
-                          onPressed: () {}, child: const Text('Eliminar'))
+                      if(button)
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: const Text('Editar'),
+                        ),
+                      if(button)
+                        ElevatedButton(onPressed: () {}, child: const Text('Eliminar'))
                     ],
                   )
                 ],
@@ -86,7 +88,10 @@ class _DataRight extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _DataPair(subTitle: 'Punto de partida:', data: route.startingPoint,),
+        _DataPair(
+          subTitle: 'Punto de partida:',
+          data: route.startingPoint,
+        ),
         _DataPair(subTitle: 'Día de partida:', data: route.departureDate),
         _DataPair(subTitle: 'Costo', data: '${route.cost}')
       ],
@@ -97,7 +102,7 @@ class _DataRight extends StatelessWidget {
 class _DataPair extends StatelessWidget {
   const _DataPair({
     Key? key,
-    required this.subTitle, 
+    required this.subTitle,
     required this.data,
   }) : super(key: key);
 
@@ -115,6 +120,8 @@ class _DataPair extends StatelessWidget {
         Text(
           data,
           style: const TextStyle(fontSize: 16),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

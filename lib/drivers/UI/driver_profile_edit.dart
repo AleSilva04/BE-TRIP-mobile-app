@@ -55,7 +55,7 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
       appBar: AppBar(
         title: Text('User Profile'),
         leading: IconButton(
-          icon: Icon(
+          icon:const Icon(
               Icons.arrow_back,
               color:Colors.white
           ),
@@ -63,7 +63,7 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
         ),
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.settings,
                 color: Colors.white,
               ),

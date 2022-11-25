@@ -27,7 +27,7 @@ class _TravelerSettingsState extends State<TravelerSettings> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context)=> Profile_Traveler()));
+                          builder: (BuildContext context)=>const Profile_Traveler()));
                 }
             )
           ],

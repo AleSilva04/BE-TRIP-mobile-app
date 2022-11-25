@@ -1,14 +1,11 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
-
+import 'package:mobile_app_flutter/travelers/UI/EditProfileEventDialog.dart';
 import '../models/UserProfile.dart';
 import 'TravelerCreateNewTravelView.dart';
 import 'TravelerHome.dart';
-import 'Traveler_Profile_Edit.dart';
+
 
 
 class Profile_Traveler extends StatefulWidget {
@@ -19,40 +16,32 @@ class Profile_Traveler extends StatefulWidget {
 }
 
 class _Profile_TravelerState extends State<Profile_Traveler> {
-  final String _baseUrl = 'be-trip-back322.herokuapp.com';
-  final List<UserProfile> profiles = [];
+   
+ 
+
+  EditProfileEventDialog? dialog;
+  late UserProfile events;
+
   late UserProfile profileSelected;
 
-  Future<String> makeRequest() async {
-    final url = Uri.https(_baseUrl,'/api/v1/travelers');
-    final resp =await http.get(url);
-    final Map<String,dynamic> UserProfileMap = json.decode(resp.body);
-    List<dynamic> data = UserProfileMap["content"];
 
-    setState(() {
-      for(var data in data){
-        final temp = UserProfile.fromMap(data);
-        profiles.add(temp);
-      }
-    });
-
-    print(UserProfileMap);
-    print("nombre: " + profiles[0].name.toString());
-    print("apellido: "+profiles[0].email.toString());
-    print("apellido: "+profiles[0].pfp.toString());
-
-    return resp.body;
-  }
 
   @override
   void initState(){
-    this.makeRequest();
+   
+  
+    super.initState();
+    dialog = EditProfileEventDialog();
+    getUser();
+     
   }
 
   bool isObscuredPassword = true;
 
   @override
   Widget build(BuildContext context) {
+   getUser();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('User Profile'),
@@ -102,13 +91,13 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(profiles[0].pfp.toString())
+                              image: NetworkImage(events.pfp)
                           )
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 135.0, left:40.0),
-                      child: Text(profiles[0].name.toString(),style: TextStyle(
+                      child: Text(events.name,style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
                         fontSize: 24.0,
@@ -118,7 +107,7 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
 
                     Container(
                       margin: EdgeInsets.only(top: 165.0, right:110.0),
-                      child: Text(profiles[0].email.toString(),style: TextStyle(
+                      child: Text(events.email,style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
                         fontSize: 20.0,
@@ -152,23 +141,26 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context)=> Profile_Options()));
-                    },
-                    child: Text("Options",style: TextStyle(
-                        fontSize: 15,
-                        letterSpacing: 2,
-                        color: Colors.white
-                    )),
+                     showDialog(context: context, builder: (BuildContext context)=>
+                        dialog!.buildDialog(
+                            context,1,events));
+
+                    },                   
                     style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
-                        padding: EdgeInsets.symmetric(horizontal: 50),
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
 
                     ),
-                  )
+                    child:  const Text("Options",style: TextStyle(
+                        fontSize: 15,
+                        letterSpacing: 2,
+                        color: Colors.white
+                    )),                             
+                    ),
+                
+          
+                  
                 ],
               )
             ],
@@ -205,5 +197,28 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
     );
   }
 
+ Future getUser() async {
+
+    String url3 = "https://be-trip-back322.herokuapp.com";
+    url3="$url3/api/v1/travelers/1";
+   
+    var response = await http.get(Uri.parse(url3), headers: {'Accept': 'application/json'});
+    print(response.body);
+    if (response.statusCode == 200) {
+      setState(() {
+        events= UserProfile.fromMap(jsonDecode(response.body));
+      });
+       return UserProfile.fromMap(jsonDecode(response.body));
+
+    } else {
+      throw Exception('Failed to load album');
+    }
+
+
+  }
+
+
+
+  
 }
 

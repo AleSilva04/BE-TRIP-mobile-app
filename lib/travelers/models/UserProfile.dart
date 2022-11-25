@@ -12,6 +12,7 @@ class UserProfile {
     required this.pfp,
     required this.puntuacion,
   });
+ 
 
   int id;
   String name;

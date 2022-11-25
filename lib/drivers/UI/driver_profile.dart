@@ -4,10 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:mobile_app_flutter/drivers/UI/EditDriverProfileDialog.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_home.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_profile_edit.dart';
+import 'package:mobile_app_flutter/drivers/models/drivers.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerCreateNewTravelView.dart';
-import 'package:mobile_app_flutter/travelers/UI/Traveler_Profile_Edit.dart';
 import 'package:mobile_app_flutter/travelers/models/UserProfile.dart';
 
 
@@ -21,41 +22,26 @@ class Profile_Driver extends StatefulWidget {
 }
 
 class _Profile_DriverState extends State<Profile_Driver> {
-  final String _baseUrl = 'be-trip-back322.herokuapp.com';
-  final List<UserProfile> profiles = [];
-  late UserProfile profileSelected;
+  
+  late Driver events;
+  EditDriverProfileDialog? dialog;
 
-  Future<String> makeRequest() async {
-    final url = Uri.https(_baseUrl,'/api/v1/drivers');
-    final resp =await http.get(url);
-    final Map<String,dynamic> UserProfileMap = json.decode(resp.body);
-    List<dynamic> data = UserProfileMap["content"];
-
-    setState(() {
-      for(var data in data){
-        final temp = UserProfile.fromMap(data);
-        profiles.add(temp);
-      }
-    });
-
-    print(UserProfileMap);
-    print("nombre: " + profiles[0].name.toString());
-    print("apellido: "+profiles[0].email.toString());
-    print("apellido: "+profiles[0].pfp.toString());
-
-    return resp.body;
-  }
+   late UserProfile profileSelected;
+    
 
   @override
   void initState(){
     super.initState();
-    makeRequest();
+    dialog = EditDriverProfileDialog();
+    getUser();
   }
 
   bool isObscuredPassword = true;
 
   @override
   Widget build(BuildContext context) {
+    getUser();  
+
     return Scaffold(
       appBar: AppBar(
         title: Text('User Profile'),
@@ -106,13 +92,13 @@ class _Profile_DriverState extends State<Profile_Driver> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(profiles[0].pfp.toString())
+                              image: NetworkImage(events.pfp)
                           )
                       ),
                     ),
                      Container(
                       margin: EdgeInsets.only(top: 135.0, left:40.0),
-                      child:  Text(profiles[0].name.toString(),style: const TextStyle(
+                      child:  Text(events.name,style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
                         fontSize: 24.0,
@@ -122,7 +108,7 @@ class _Profile_DriverState extends State<Profile_Driver> {
 
                     Container(
                       margin: EdgeInsets.only(top: 165.0, right:110.0),
-                      child: Text(profiles[0].email.toString(),style: const TextStyle(
+                      child: Text(events.email,style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
                         fontSize: 20.0,
@@ -137,13 +123,10 @@ class _Profile_DriverState extends State<Profile_Driver> {
                 children: [
                   OutlinedButton(
                     onPressed: (){
-                      
-
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context)=> const Traveler_newTravel()));
-
                     },
                     style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -157,16 +140,14 @@ class _Profile_DriverState extends State<Profile_Driver> {
                     )),
                   ),
                   ElevatedButton(
-                    
                     onPressed: (){
-                      
-                      Navigator.push(
+                
+                     showDialog(context: context, builder: (BuildContext context)=>
+                        dialog!.buildDialog(
+                            context,1,events));
                         
-                          context,
-                          MaterialPageRoute(
-                         
-                              builder: (BuildContext context)=> const ProfileD_Options()));
-                    },
+
+                    },                   
                     style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
                         padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -177,8 +158,8 @@ class _Profile_DriverState extends State<Profile_Driver> {
                         fontSize: 15,
                         letterSpacing: 2,
                         color: Colors.white
-                    )),
-                  )
+                    )),                             
+                    ),
                 ],
               )
             ],
@@ -215,4 +196,24 @@ class _Profile_DriverState extends State<Profile_Driver> {
     );
   }
 
+
+  Future getUser() async {
+
+    String url3 = "https://be-trip-back322.herokuapp.com";
+    url3="$url3/api/v1/drivers/1";
+   
+    var response = await http.get(Uri.parse(url3), headers: {'Accept': 'application/json'});
+    print(response.body);
+    if (response.statusCode == 200) {
+      setState(() {
+        events= Driver.fromMap(jsonDecode(response.body));
+      });
+       return Driver.fromMap(jsonDecode(response.body));
+
+    } else {
+      throw Exception('Failed to load album');
+    }
+
+
+  }
 }
