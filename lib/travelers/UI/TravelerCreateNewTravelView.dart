@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
+import '../models/Passengers.dart';
+import '../models/TravelEvent.dart';
 import 'TravelerHome.dart';
 
 class Traveler_newTravel extends StatefulWidget {
@@ -14,16 +17,24 @@ class Traveler_newTravel extends StatefulWidget {
 class _Traveler_newTravelState extends State<Traveler_newTravel> {
 
   bool isObscuredPassword = true;
-
+   GlobalKey<FormState>_formKey=GlobalKey<FormState>();
+  String url = "https://be-trip-back322.herokuapp.com/api/v1/travelers";
+  final exdestiny = TextEditingController();
+  final destinyUrl = TextEditingController();
+  final exseating = TextEditingController();
+  final exstarting_point= TextEditingController();
+  final departure_time= TextEditingController();
+  final departure_date= TextEditingController();
+  final excost= TextEditingController();
+  final extype= TextEditingController();
+  final explate= TextEditingController();
+  bool nice=false;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Creación de Viaje'),
-        actions: [
-          Image(image: NetworkImage("https://astelus.com/wp-content/viajes/Lago-Moraine-Parque-Nacional-Banff-Alberta-Canada.jpg")
-            ,height: 30,)
-        ],
         leading: IconButton(
           icon: Icon(
               Icons.arrow_back,
@@ -43,12 +54,157 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
           child: ListView(
             children: [
               SizedBox(height: 30),
-              buildTextFild("Fecha de Viaje", "2022-12-12", false),
-              buildTextFild("Cantidad de Pasajeros", "10", false),
-              buildTextFild("Hora de Salida", "4:00 am", false),
-              buildTextFild("Lugar de Recojo", "Jr. Hernando Lurin", false),
-              buildTextFild("Metodo de Pago", "Tarjeta", false),
-              buildTextFild("Costo por Asiento", "250", false),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: exdestiny,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Destiny",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Destiny",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: destinyUrl,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Destiny URL",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Destiny Url",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: exseating,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Seatings",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Seatingd",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: exstarting_point,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Starting Point",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Starting Point",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: departure_time,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Departure Time",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Departure Time",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: departure_date,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Departure Date",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Departure Date",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: excost,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Posible Cost by Passenger",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Enter Cost",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: extype,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Type of Travel Event",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Enter Type",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: explate,
+                      validator: (value){
+                        return value!.isNotEmpty ? null:"Invalid Field";
+                      },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Plate",
+                          border:InputBorder.none,
+                          prefixIcon: Icon(Icons.card_travel_outlined),
+                          labelText: "Enter Plate",
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800
+                          )
+                      ),
+                    )
+                  ],
+                ),
+              ),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,11 +225,10 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const TravelerHome()));
+                    onPressed:(){
+                      createFunction();
                     },
-                    child: Text("Reservar",style: TextStyle(
+                    child: Text("Crear",style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,
                         color: Colors.white
@@ -94,30 +249,34 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
     );
   }
 
+  Future create(int travelerId, TravelEvent event) async {
 
-  Widget buildTextFild(String labelText, String placeHolder, bool isPasswordTextField){
-    return Padding(
-      padding: EdgeInsets.only(bottom: 30),
-      child: TextField(
-        obscureText: isPasswordTextField ? isObscuredPassword: false,
-        decoration: InputDecoration(
-            suffixIcon: isPasswordTextField ?
-            IconButton(
-              icon: Icon(Icons.remove_red_eye, color: Colors.grey,),
-              onPressed: (){},
-            ): null,
-            contentPadding: EdgeInsets.only(bottom: 5),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeHolder,
-            hintStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color:Colors.grey
-            )
-        ),
-      ),
+    var response = await http.post(
+        Uri.parse("$url/$travelerId/travel-events"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'},
+        body: event.toJson2()
     );
+    print(response.body);
   }
+  void createFunction(){
+    TravelEvent a=TravelEvent(
+        destiny: exdestiny.text.toString(),
+        destinyUrl: destinyUrl.text.toString(),
+        seating: int.parse(exseating.text),
+        startingPoint: exstarting_point.text.toString(),
+        departureTime: departure_time.text.toString(),
+        departureDate: departure_date.text.toString(),
+        cost: int.parse(exseating.text),
+        type: extype.text.toString(),
+        driverId: -1, id: 0,
+        travelerProfilePhotofUrl: 'https://www.sopitas.com/wp-content/uploads/2022/05/perrito-cheems-esta-enfermo-meme.png');
+    a.plate=explate.text.toString();
+    a.passengers=List.empty();
+    create(1, a);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const TravelerHome()));
+  }
+
 
 }

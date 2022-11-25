@@ -4,6 +4,8 @@ import 'package:mobile_app_flutter/login/services/login_traveler.dart';
 import 'package:mobile_app_flutter/login/services/login_provider.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerHome.dart';
 
+import 'RegisterView.dart';
+
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -83,6 +85,33 @@ body: Column(
                         const SizedBox(
                           height: 10,
                         ),
+
+                        FloatingActionButton(
+                          heroTag: 'btnTraveller',
+                          onPressed: (){
+                            //networking para login como traveler
+                            Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => const TravelerHome()));
+                          },
+                          child: Icon(Icons.person),
+                        ),
+                        FloatingActionButton(
+                          heroTag: 'btnDriver',
+                          onPressed: (){
+                            //networking para login como driver
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => const DriverHome()));
+                          },
+                          child: Icon(Icons.drive_eta),
+                        ),
+                      Text("No tienes una cuenta?"),
+                      TextButton(
+                          onPressed: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context)=> registerBrigde()));
+                      }, child: Text("Registrate"))
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -117,6 +146,7 @@ body: Column(
                           ),
                           ],  
                         ),                        
+
                     ],
                   ),
                   )

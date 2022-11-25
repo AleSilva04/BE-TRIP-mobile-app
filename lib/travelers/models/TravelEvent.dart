@@ -35,7 +35,7 @@ class TravelEvent {
   factory TravelEvent.fromJson(String str) => TravelEvent.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
-
+  String toJson2() => json.encode(toMap2());
   factory TravelEvent.fromMap(Map<String, dynamic> json) => TravelEvent(
     id: json["id"],
     driverId: json["driverId"],
@@ -69,6 +69,20 @@ class TravelEvent {
 
   Map<String, dynamic> toMap() => {
     "id": id,
+    "driverId": driverId,
+    "destiny": destiny,
+    "destinyUrl": destinyUrl,
+    "seating": seating,
+    "starting_point": startingPoint,
+    "departure_time": departureTime,
+    "departure_date": departureDate,
+    "cost": cost,
+    "type": type,
+    "plate": plate,
+    "travelerProfilePhotofUrl": travelerProfilePhotofUrl,
+    "passengers": List<dynamic>.from(passengers!.map((x) => x.toMap())),
+  };
+  Map<String, dynamic> toMap2() => {
     "driverId": driverId,
     "destiny": destiny,
     "destinyUrl": destinyUrl,
