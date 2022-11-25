@@ -15,7 +15,7 @@ class TravelEvent {
   String type;
   String? plate;
   String travelerProfilePhotofUrl;
-  List<UserProfile>? passengers;
+  List<Passenger>? passengers;
 
   TravelEvent({
     required this.id,
@@ -64,7 +64,7 @@ class TravelEvent {
     type: json["type"],
     plate: json["plate"],
     travelerProfilePhotofUrl: json["travelerProfilePhotofUrl"],
-    passengers: List<UserProfile>.from(json["passengers"].map((x) => UserProfile.fromMap(x))),
+    passengers: List<Passenger>.from(json["passengers"].map((x) => Passenger.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {

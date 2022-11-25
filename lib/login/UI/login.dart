@@ -86,32 +86,8 @@ body: Column(
                           height: 10,
                         ),
 
-                        FloatingActionButton(
-                          heroTag: 'btnTraveller',
-                          onPressed: (){
-                            //networking para login como traveler
-                            Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => const TravelerHome()));
-                          },
-                          child: Icon(Icons.person),
-                        ),
-                        FloatingActionButton(
-                          heroTag: 'btnDriver',
-                          onPressed: (){
-                            //networking para login como driver
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => const DriverHome()));
-                          },
-                          child: Icon(Icons.drive_eta),
-                        ),
-                      Text("No tienes una cuenta?"),
-                      TextButton(
-                          onPressed: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context)=> registerBrigde()));
-                      }, child: Text("Registrate"))
+
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -133,19 +109,22 @@ body: Column(
                           FloatingActionButton(
                             heroTag: 'btnDriver',
                             onPressed: () {
-                              setState(() {
-                                AuthProvider.validateUser(email.text, password.text).then((value) {
-                                  if (value) {
                                     Navigator.push(context,
                                     MaterialPageRoute(builder: (context) => const DriverHome()));
-                                  }
-                                });
-                              });
+
                             },
                             child: Icon(Icons.drive_eta),
                           ),
                           ],  
-                        ),                        
+                        ),
+                      Text("No tienes una cuenta?"),
+                      TextButton(
+                          onPressed: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context)=> registerBrigde()));
+                          }, child: Text("Registrate")),
 
                     ],
                   ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import 'package:mobile_app_flutter/travelers/models/Passengers.dart';
+
 import 'dart:convert';
 
 import '../../drivers/screens/loading_screen.dart';
 import '../models/TravelEvent.dart';
-import '../models/UserProfile.dart';
+
 import 'Profile_User_Selected_By_Travel.dart';
 import 'TravelerProfileView.dart';
 
@@ -27,7 +29,7 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
   bool isPassenger=false;
   int userId2=1;
   bool isLoading=true;
-  late UserProfile user;
+  late Passenger user;
   @override
   void initState() {
     super.initState();
@@ -257,9 +259,9 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
     var response = await http.get(Uri.parse(url3), headers: {'Accept': 'application/json'});
     if (response.statusCode == 200) {
       setState(() {
-        user=UserProfile.fromMap(jsonDecode(response.body));
+        user=Passenger.fromMap(jsonDecode(response.body));
       });
-      return UserProfile.fromMap(jsonDecode(response.body));
+      return Passenger.fromMap(jsonDecode(response.body));
 
     } else {
       throw Exception('Failed to load album');

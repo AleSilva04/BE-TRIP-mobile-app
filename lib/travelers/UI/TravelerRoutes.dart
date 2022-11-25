@@ -197,4 +197,3 @@ class _TravelerRoutesState extends State<TravelerRoutes> {
     return flag;
   }
 }
-

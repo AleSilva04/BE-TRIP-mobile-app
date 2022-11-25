@@ -4,7 +4,7 @@ import 'package:mobile_app_flutter/login/UI/login.dart';
 import 'dart:convert';
 
 import 'package:mobile_app_flutter/travelers/UI/EditTravelerEventDialog.dart';
-import 'package:mobile_app_flutter/travelers/models/Passengers.dart';
+
 import 'package:mobile_app_flutter/travelers/models/TravelEvent.dart';
 
 class TravelerMyEvents extends StatefulWidget {

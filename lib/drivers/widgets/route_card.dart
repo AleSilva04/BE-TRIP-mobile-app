@@ -25,7 +25,6 @@ class _RouteCardState extends State<RouteCard> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,13 +54,19 @@ class _RouteCardState extends State<RouteCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if(button)
+                      if (widget.button)
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => dialog!
+                                    .buildDialog(context, 1, widget.route));
+                          },
                           child: const Text('Editar'),
                         ),
-                      if(button)
-                        ElevatedButton(onPressed: () {}, child: const Text('Eliminar'))
+                      if (widget.button)
+                        ElevatedButton(
+                            onPressed: () {}, child: const Text('Eliminar'))
                     ],
                   )
                 ],
