@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:mobile_app_flutter/travelers/UI/TravelerSelectedTravelEvent.dart';
 import 'package:mobile_app_flutter/travelers/models/TravelEvent.dart';
 
+import '../models/UserProfile.dart';
+
 class TravelerEvents extends StatefulWidget {
   const TravelerEvents({Key? key}) : super(key: key);
 
@@ -15,6 +17,7 @@ class TravelerEvents extends StatefulWidget {
 class _TravelerEventsState extends State<TravelerEvents> {
   String url = "https://be-trip-back322.herokuapp.com/api/v1/travel-events";
   List<TravelEvent> events = [];
+
   @override
   void initState() {
     super.initState();

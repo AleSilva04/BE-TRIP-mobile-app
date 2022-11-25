@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../models/TravelEvent.dart';
+import '../models/UserProfile.dart';
+import 'Profile_User_Selected_By_Travel.dart';
+import 'TravelerProfileView.dart';
 
 class SelectedTravelEvent extends StatefulWidget {
   final int id;
@@ -139,8 +142,9 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
                                     return  ListTile(
                                       leading: Icon(Icons.person,color: Colors.green,),
                                       title:Text(event.passengers![index].name,style: TextStyle(
-                                          fontWeight: FontWeight.bold
-                                      ),),
+                                          fontWeight: FontWeight.bold),
+                                      ),
+                                      onTap: (){Navigator.push(context,MaterialPageRoute(builder: (BuildContext context)=> Profile_User_Select(index)));},
                                       tileColor: Colors.blueGrey,
                                     );
                                   }
@@ -161,6 +165,15 @@ class _SelectedTravelEventState extends State<SelectedTravelEvent> {
                                           Navigator.pop(context);
                                         },
                                         child: Text("Cancelar")),
+                                    ElevatedButton(
+
+                                        onPressed: (){
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext context)=> Profile_User_Select(0)));
+                                        },
+                                        child: Text("Client Profile")),
                                   ],
                                 )
                               ],

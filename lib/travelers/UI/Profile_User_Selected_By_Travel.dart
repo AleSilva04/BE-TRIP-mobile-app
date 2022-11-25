@@ -1,27 +1,29 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
-
 import '../models/UserProfile.dart';
 import 'TravelerCreateNewTravelView.dart';
 import 'TravelerHome.dart';
 import 'Traveler_Profile_Edit.dart';
 
-
-class Profile_Traveler extends StatefulWidget {
-  const Profile_Traveler({Key? key}) : super(key: key);
+class Profile_User_Select extends StatefulWidget{
+  final int id;
+  Profile_User_Select(this.id);
 
   @override
-  State<Profile_Traveler> createState() => _Profile_TravelerState();
+  State<Profile_User_Select> createState() => _Profile_User_Select(this.id);
 }
 
-class _Profile_TravelerState extends State<Profile_Traveler> {
+class _Profile_User_Select extends State<Profile_User_Select>{
   final String _baseUrl = 'be-trip-back322.herokuapp.com';
   final List<UserProfile> profiles = [];
   late UserProfile profileSelected;
+
+  final int id;
+  _Profile_User_Select(this.id);
+
+
 
   Future<String> makeRequest() async {
     final url = Uri.https(_baseUrl,'/api/v1/travelers');
@@ -35,7 +37,6 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
         profiles.add(temp);
       }
     });
-
     print(UserProfileMap);
     print("nombre: " + profiles[0].name.toString());
     print("apellido: "+profiles[0].email.toString());
@@ -55,7 +56,7 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
+        title: Text('User profile from traveled event'),
         leading: IconButton(
           icon: Icon(
               Icons.home,
@@ -102,13 +103,13 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(profiles[0].pfp.toString())
+                              image: NetworkImage(profiles[id].pfp.toString())
                           )
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 135.0, left:40.0),
-                      child: Text(profiles[0].name.toString(),style: TextStyle(
+                      child: Text(profiles[id].name.toString(),style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
                         fontSize: 24.0,
@@ -118,7 +119,7 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
 
                     Container(
                       margin: EdgeInsets.only(top: 165.0, right:110.0),
-                      child: Text(profiles[0].email.toString(),style: TextStyle(
+                      child: Text(profiles[id].email.toString(),style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
                         fontSize: 20.0,
@@ -179,7 +180,6 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
   }
 
 
-
   Widget buildTextFild(String labelText, String placeHolder, bool isPasswordTextField){
     return Padding(
       padding: EdgeInsets.only(bottom: 30),
@@ -205,5 +205,6 @@ class _Profile_TravelerState extends State<Profile_Traveler> {
     );
   }
 
-}
 
+
+}
