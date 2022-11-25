@@ -3,6 +3,8 @@ import 'package:mobile_app_flutter/drivers/UI/driver_home.dart';
 //import 'package:mobile_app_flutter/drivers/UI/driver_home.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerHome.dart';
 
+import 'RegisterView.dart';
+
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -95,6 +97,14 @@ body: Column(
                           },
                           child: Icon(Icons.drive_eta),
                         ),
+                      Text("No tienes una cuenta?"),
+                      TextButton(
+                          onPressed: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context)=> registerBrigde()));
+                      }, child: Text("Registrate"))
                     ],
                   ),
                   )

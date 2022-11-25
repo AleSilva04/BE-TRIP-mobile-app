@@ -35,10 +35,6 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Creación de Viaje'),
-        actions: [
-          Image(image: NetworkImage("https://astelus.com/wp-content/viajes/Lago-Moraine-Parque-Nacional-Banff-Alberta-Canada.jpg")
-            ,height: 30,)
-        ],
         leading: IconButton(
           icon: Icon(
               Icons.arrow_back,
@@ -209,7 +205,6 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                   ],
                 ),
               ),
-
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
