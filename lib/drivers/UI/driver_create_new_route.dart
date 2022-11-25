@@ -1,33 +1,28 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_app_flutter/drivers/models/route.dart';
 
-import '../models/Passengers.dart';
-import '../models/TravelEvent.dart';
-import 'TravelerHome.dart';
+import 'driver_home.dart';
 
-class Traveler_newTravel extends StatefulWidget {
-  const Traveler_newTravel({Key? key}) : super(key: key);
+class Driver_newRoute extends StatefulWidget {
+  const Driver_newRoute({Key? key}) : super(key: key);
 
   @override
-  State<Traveler_newTravel> createState() => _Traveler_newTravelState();
+  State<Driver_newRoute> createState() => _Driver_newRouteState();
 }
 
-class _Traveler_newTravelState extends State<Traveler_newTravel> {
+class _Driver_newRouteState extends State<Driver_newRoute> {
 
   bool isObscuredPassword = true;
-   GlobalKey<FormState>_formKey=GlobalKey<FormState>();
-  String url = "https://be-trip-back322.herokuapp.com/api/v1/travelers";
+  GlobalKey<FormState>_formKey=GlobalKey<FormState>();
+  String url = "https://be-trip-back322.herokuapp.com/api/v1/drivers";
   final exdestiny = TextEditingController();
-  final destinyUrl = TextEditingController();
   final exseating = TextEditingController();
   final exstarting_point= TextEditingController();
   final departure_time= TextEditingController();
   final departure_date= TextEditingController();
   final excost= TextEditingController();
-  final extype= TextEditingController();
-  final explate= TextEditingController();
   bool nice=false;
   @override
   Widget build(BuildContext context) {
@@ -68,22 +63,6 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                           border:InputBorder.none,
                           prefixIcon: Icon(Icons.card_travel_outlined),
                           labelText: "Destiny",
-                          labelStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w800
-                          )
-                      ),
-                    ),
-                    TextFormField(
-                      controller: destinyUrl,
-                      validator: (value){
-                        return value!.isNotEmpty ? null:"Invalid Field";
-                      },
-                      decoration: const InputDecoration(
-                          hintText: "Enter Destiny URL",
-                          border:InputBorder.none,
-                          prefixIcon: Icon(Icons.card_travel_outlined),
-                          labelText: "Destiny Url",
                           labelStyle: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w800
@@ -170,38 +149,6 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                           )
                       ),
                     ),
-                    TextFormField(
-                      controller: extype,
-                      validator: (value){
-                        return value!.isNotEmpty ? null:"Invalid Field";
-                      },
-                      decoration: const InputDecoration(
-                          hintText: "Enter Type of Travel Event",
-                          border:InputBorder.none,
-                          prefixIcon: Icon(Icons.card_travel_outlined),
-                          labelText: "Enter Type",
-                          labelStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w800
-                          )
-                      ),
-                    ),
-                    TextFormField(
-                      controller: explate,
-                      validator: (value){
-                        return value!.isNotEmpty ? null:"Invalid Field";
-                      },
-                      decoration: const InputDecoration(
-                          hintText: "Enter Plate",
-                          border:InputBorder.none,
-                          prefixIcon: Icon(Icons.card_travel_outlined),
-                          labelText: "Enter Plate",
-                          labelStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w800
-                          )
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -212,7 +159,7 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
                   OutlinedButton(
                     onPressed: (){
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const TravelerHome()));
+                          MaterialPageRoute(builder: (context) => const DriverHome()));
                     },
                     child: Text("Cancel",style: TextStyle(
                         fontSize: 15,
@@ -249,10 +196,10 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
     );
   }
 
-  Future create(int travelerId, TravelEvent event) async {
+  Future create(int driverId, DriverRoute event) async {
 
     var response = await http.post(
-        Uri.parse("$url/$travelerId/travel-events"),
+        Uri.parse("$url/$driverId/driver-routes"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'},
         body: event.toJson2()
@@ -260,22 +207,19 @@ class _Traveler_newTravelState extends State<Traveler_newTravel> {
     print(response.body);
   }
   void createFunction(){
-    TravelEvent a=TravelEvent(
+    DriverRoute a= DriverRoute(
         destiny: exdestiny.text.toString(),
-        destinyUrl: destinyUrl.text.toString(),
         seating: int.parse(exseating.text),
         startingPoint: exstarting_point.text.toString(),
         departureTime: departure_time.text.toString(),
         departureDate: departure_date.text.toString(),
         cost: int.parse(exseating.text),
-        type: extype.text.toString(),
-        driverId: -1, id: 0,
-        travelerProfilePhotofUrl: 'https://www.sopitas.com/wp-content/uploads/2022/05/perrito-cheems-esta-enfermo-meme.png');
-    a.plate=explate.text.toString();
+        driverId: -1, id: 0);
+
     a.passengers=List.empty();
     create(1, a);
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const TravelerHome()));
+        MaterialPageRoute(builder: (context) => const DriverHome()));
   }
 
 
