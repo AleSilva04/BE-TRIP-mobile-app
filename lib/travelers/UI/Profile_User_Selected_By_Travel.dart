@@ -1,28 +1,32 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app_flutter/drivers/UI/driver_profile.dart';
-import 'package:mobile_app_flutter/travelers/models/UserProfile.dart';
-
 import 'package:http/http.dart' as http;
+import '../models/UserProfile.dart';
+import 'TravelerCreateNewTravelView.dart';
+import 'TravelerHome.dart';
+import 'Traveler_Profile_Edit.dart';
 
-
-
-
-class ProfileD_Options extends StatefulWidget {
-  const ProfileD_Options({Key? key}) : super(key: key);
+class Profile_User_Select extends StatefulWidget{
+  final int id;
+  Profile_User_Select(this.id);
 
   @override
-  State<ProfileD_Options> createState() => _ProfileD_OptionsState();
+  State<Profile_User_Select> createState() => _Profile_User_Select(this.id);
 }
 
-class _ProfileD_OptionsState extends State<ProfileD_Options> {
+class _Profile_User_Select extends State<Profile_User_Select>{
   final String _baseUrl = 'be-trip-back322.herokuapp.com';
   final List<UserProfile> profiles = [];
   late UserProfile profileSelected;
 
+  final int id;
+  _Profile_User_Select(this.id);
+
+
+
   Future<String> makeRequest() async {
-    final url = Uri.https(_baseUrl,'/api/v1/drivers');
+    final url = Uri.https(_baseUrl,'/api/v1/travelers');
     final resp =await http.get(url);
     final Map<String,dynamic> UserProfileMap = json.decode(resp.body);
     List<dynamic> data = UserProfileMap["content"];
@@ -33,7 +37,6 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
         profiles.add(temp);
       }
     });
-
     print(UserProfileMap);
     print("nombre: " + profiles[0].name.toString());
     print("apellido: "+profiles[0].email.toString());
@@ -53,17 +56,20 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
+        title: Text('User profile from traveled event'),
         leading: IconButton(
-          icon:const Icon(
-              Icons.arrow_back,
+          icon: Icon(
+              Icons.home,
               color:Colors.white
           ),
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const TravelerHome()));
+          },
         ),
         actions: [
           IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.settings,
                 color: Colors.white,
               ),
@@ -97,48 +103,44 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(profiles[0].pfp.toString())
+                              image: NetworkImage(profiles[id].pfp.toString())
                           )
                       ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                width: 4,
-                                color: Colors.white
-                            ),
-                            color: Colors.blue
-                        ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
+                    Container(
+                      margin: EdgeInsets.only(top: 135.0, left:40.0),
+                      child: Text(profiles[id].name.toString(),style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24.0,
+
+                      )),
+                    ),
+
+                    Container(
+                      margin: EdgeInsets.only(top: 165.0, right:110.0),
+                      child: Text(profiles[id].email.toString(),style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20.0,
+                      )),
+                    ),
+
                   ],
                 ),
               ),
-              SizedBox(height: 30),
-              buildTextFild("FullName", "Daemon", false),
-              buildTextFild("Email", "Daemon@gmail.com", false),
-              buildTextFild("Password", "**", false),
-              buildTextFild("FullName", "Daemon", false),
-              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(
                     onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Profile_Driver()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context)=> Traveler_newTravel()));
+                      Navigator.pop(context);
                     },
-                    child: Text("Cancel",style: TextStyle(
+                    child: Text("New Travel",style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,
                         color: Colors.black
@@ -150,10 +152,13 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Profile_Driver()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context)=> Profile_Options()));
+                      Navigator.pop(context);
                     },
-                    child: Text("Save",style: TextStyle(
+                    child: Text("Options",style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,
                         color: Colors.white
@@ -173,6 +178,7 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
       ),
     );
   }
+
 
   Widget buildTextFild(String labelText, String placeHolder, bool isPasswordTextField){
     return Padding(
@@ -198,5 +204,7 @@ class _ProfileD_OptionsState extends State<ProfileD_Options> {
       ),
     );
   }
+
+
 
 }

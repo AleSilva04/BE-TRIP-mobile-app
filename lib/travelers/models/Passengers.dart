@@ -1,6 +1,6 @@
 import 'dart:convert';
-class Passenger {
-  Passenger({
+class UserProfile {
+  UserProfile({
     required this.id,
     required this.name,
     required this.age,
@@ -26,11 +26,11 @@ class Passenger {
   String createAt;
   String updateAt;
 
-  factory Passenger.fromJson(String str) => Passenger.fromMap(json.decode(str));
+  factory UserProfile.fromJson(String str) => UserProfile.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Passenger.fromMap(Map<String, dynamic> json) => Passenger(
+  factory UserProfile.fromMap(Map<String, dynamic> json) => UserProfile(
     id: json["id"],
     name: json["name"],
     age: json["age"],
