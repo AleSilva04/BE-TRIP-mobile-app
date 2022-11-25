@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/drivers/UI/driver_home.dart';
-//import 'package:mobile_app_flutter/drivers/UI/driver_home.dart';
+import 'package:mobile_app_flutter/login/services/login_traveler.dart';
+import 'package:mobile_app_flutter/login/services/login_provider.dart';
 import 'package:mobile_app_flutter/travelers/UI/TravelerHome.dart';
 
 
@@ -12,11 +13,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final email = TextEditingController();
+  final password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("LOGIN"),
+        title: const Text("LOGIN"),
       ),
 
 body: Column(
@@ -59,6 +64,7 @@ body: Column(
                   child: Column(
                     children: [
                         TextFormField(
+                          controller: email,
                           decoration: const InputDecoration(
                             labelText: "Email",
                             hintText: "example@gmail.com"
@@ -77,24 +83,40 @@ body: Column(
                         const SizedBox(
                           height: 10,
                         ),
-                        FloatingActionButton(
-                          heroTag: 'btnTraveller',
-                          onPressed: (){
-                            //networking para login como traveler
-                            Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => const TravelerHome()));
-                          },
-                          child: Icon(Icons.person),
-                        ),
-                        FloatingActionButton(
-                          heroTag: 'btnDriver',
-                          onPressed: (){
-                            //networking para login como driver
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => const DriverHome()));
-                          },
-                          child: Icon(Icons.drive_eta),
-                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                          FloatingActionButton(
+                            heroTag: 'btnTraveller',
+                            onPressed: () {
+                              setState(() {
+                                AuthTravelerProvider.validateUser(email.text, password.text).then((value) {
+                                  if (value) {
+                                    Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => const TravelerHome()));
+                                  }
+                                });
+                              });
+                            },
+                            child: Icon(Icons.person),
+                          ),
+                          const SizedBox(width: 20,),
+                          FloatingActionButton(
+                            heroTag: 'btnDriver',
+                            onPressed: () {
+                              setState(() {
+                                AuthProvider.validateUser(email.text, password.text).then((value) {
+                                  if (value) {
+                                    Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => const DriverHome()));
+                                  }
+                                });
+                              });
+                            },
+                            child: Icon(Icons.drive_eta),
+                          ),
+                          ],  
+                        ),                        
                     ],
                   ),
                   )
