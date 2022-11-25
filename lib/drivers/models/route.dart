@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mobile_app_flutter/travelers/models/Passengers.dart';
+
 class DriverRoute {
   DriverRoute({
     required this.id,
@@ -23,6 +25,7 @@ class DriverRoute {
   int cost;
   List<dynamic>? passengers;
 
+
   factory DriverRoute.fromJson(String str) =>
       DriverRoute.fromMap(json.decode(str));
 
@@ -38,7 +41,7 @@ class DriverRoute {
         departureTime: json["departure_time"],
         departureDate: json["departure_date"],
         cost: json["cost"],
-        passengers: List<dynamic>.from(json["passengers"].map((x) => x)),
+        passengers: List<Passenger>.from(json["passengers"].map((x) => x)),
       );
 
   Map<String, dynamic> toMap() => {

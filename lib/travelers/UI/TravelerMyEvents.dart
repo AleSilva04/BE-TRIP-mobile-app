@@ -51,6 +51,7 @@ class _TravelerMyEventsState extends State<TravelerMyEvents> {
           return Dismissible(
               key: Key(events[index].id.toString()),
               onDismissed: (direction){
+                delete(events[index].id);
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Se elimino")));
               },
               child:  ListTile(
@@ -118,5 +119,14 @@ class _TravelerMyEventsState extends State<TravelerMyEvents> {
       // then throw an exception.
       throw Exception('Failed to load album');
     }
+  }
+  Future delete(int id) async {
+    String url2 = "https://be-trip-back322.herokuapp.com/api/v1/travelers";
+    url2="$url2/$id/travel-events/$userId";
+    print(url2);
+    var response = await http.delete(
+        Uri.parse(url2)
+    );
+    print(response.body);
   }
 }
