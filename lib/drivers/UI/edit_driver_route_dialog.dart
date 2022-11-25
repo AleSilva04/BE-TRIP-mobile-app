@@ -120,8 +120,8 @@ class EditDriverRouteDialog{
       ],
     );
   }
-  Future update(int travelerId,int  eventId, DriverRoute event) async {
-    url="$url/$travelerId/travel-events/$eventId";
+  Future update(int driverId,int  eventId, DriverRoute event) async {
+    url="$url/$driverId/driver-routes/$eventId";
     var response = await http.put(
         Uri.parse(url),
         headers: <String, String>{
